@@ -1,0 +1,9 @@
+*.pyc
+*.swp
+
+myproject/
+manage.py
+db.sqlite3
+
+dist/
+django_nyancat.egg-info/
