@@ -1,0 +1,15 @@
+<h1>Videos</h1>
+
+<ul>
+    {% for video in videos %}
+    <li><a href="{{ video.get_youtube_url }}">Video {{ forloop.counter }}</a></li>
+    {% empty %}
+        <li>No videos here.</li>
+    {% endfor %}
+</ul>
+
+{% if is_owner %}
+<a href="{% url 'nyancat:addvideo' %}">Add video</a>
+{% else %}
+<p>Not owner</p>
+{% endif %}
