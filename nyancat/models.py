@@ -15,15 +15,15 @@ class Video(models.Model):
 
 
 class Person(models.Model):
-    password = models.CharField(max_length=32, unique=True)
+    password = models.CharField(max_length=32, unique=True, 
+            default=str(uuid4()).replace('-', ''))
+    url = models.CharField(max_length=32, unique=True, 
+            default=str(uuid4()).replace('-', ''))
     videos = models.ManyToManyField(Video)
-
-    def save(self, *args, **kwargs):
-        self.password = str(uuid4()).replace('-', '')
-        super(Person, self).save(*args, **kwargs)
+    email = models.EmailField(blank=True)
 
     def get_absolute_url(self):
-        return reverse('nyancat:my_videos', kwargs={'person_pk': self.pk})
+        return reverse('nyancat:my_videos', kwargs={'person_url': self.url})
 
     def __str__(self):
         return str(self.pk)

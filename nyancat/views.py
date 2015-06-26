@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
+from django.views.generic.edit import UpdateView
 from django.http import (HttpResponse, 
         HttpResponseRedirect, HttpResponseForbidden) # PEP 0328
 from django.core.urlresolvers import reverse
@@ -16,15 +17,18 @@ ONE_YEAR = ONE_DAY * 365
 
 
 def index(request):
-    # If user already 'registered', redirect him.
+    #TODO: make this more secure
     password = request.COOKIES.get('password', None)
     if password:
-        return HttpResponse('Use your bookmarks')
+        person_url = Person.objects.get(password=password).url
+        response = HttpResponseRedirect(reverse('nyancat:my_videos',
+            kwargs={'person_url': person_url}))
+        return response
 
 
     person = Person.objects.create()
     response = HttpResponseRedirect(reverse('nyancat:my_videos',
-        kwargs={'person_pk': person.pk}))
+        kwargs={'person_url': person.url}))
     response.set_cookie('password', person.password, max_age=ONE_YEAR)
     return response
 
@@ -37,8 +41,15 @@ def get_edit_person(request):
     return Person.objects.get(password=password)
 
 
-def my_videos(request, person_pk):
-    person = get_object_or_404(Person, pk=person_pk)
+class UpdatePerson(UpdateView):
+    model = Person
+    fields = ('email',)
+    def get_object(self):
+        return get_edit_person(self.request)
+
+
+def my_videos(request, person_url):
+    person = get_object_or_404(Person, url=person_url)
     password = request.COOKIES.get('password', None)
     is_owner = True if password == person.password else False
 
