@@ -1,4 +1,13 @@
-<h1>Videos</h1>
+<h1>{% if is_owner %}Your {% endif %}Videos</h1>
+
+
+{% if messages %}
+<ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+</ul>
+{% endif %}
 
 <ul>
     {% for video in videos %}
@@ -10,6 +19,4 @@
 
 {% if is_owner %}
 <a href="{% url 'nyancat:addvideo' %}">Add video</a>
-{% else %}
-<p>Not owner</p>
 {% endif %}

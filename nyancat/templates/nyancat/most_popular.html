@@ -1,0 +1,7 @@
+<ul>
+{% for video in video_list %}
+<li><a href="{{ video.get_youtube_url }}">Video {{ forloop.counter }}</a> ({{ video.num_persons }})</li>
+{% empty %}
+    <li>No videos.</li>
+{% endfor %}
+</ul>

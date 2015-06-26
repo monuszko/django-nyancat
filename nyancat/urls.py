@@ -9,4 +9,6 @@ urlpatterns = (
             views.myvideos, name='myvideos'),
         url(r'^addvideo/$',
             views.addvideo, name='addvideo'),
+        url(r'^mostpopular/$',
+            views.MostPopular.as_view(), name='mostpopular'),
         )
