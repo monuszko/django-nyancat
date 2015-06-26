@@ -5,10 +5,12 @@ from .forms import VideoForm
 
 urlpatterns = (
         url(r'^$', views.index, name='index'),
-        url(r'^myvideos/(?P<person_pk>[a-zA-Z0-9]+)/$',
-            views.myvideos, name='myvideos'),
-        url(r'^addvideo/$',
-            views.addvideo, name='addvideo'),
-        url(r'^mostpopular/$',
-            views.MostPopular.as_view(), name='mostpopular'),
+        url(r'^my_videos/(?P<person_pk>[a-zA-Z0-9]+)/$',
+            views.my_videos, name='my_videos'),
+        url(r'^add_video/$',
+            views.add_video, name='add_video'),
+        url(r'^remove_videos/$',
+            views.remove_videos, name='remove_videos'),
+        url(r'^most_popular/$',
+            views.MostPopular.as_view(), name='most_popular'),
         )

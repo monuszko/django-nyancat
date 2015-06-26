@@ -1,0 +1,10 @@
+<form action="" method="POST">{% csrf_token %}
+<ul>
+    {% for video in video_list %}
+    <li><a href="{{ video.get_youtube_url }}">Video {{ forloop.counter }}</a> <input type="checkbox" name="to_remove" value="{{ video.id }}"/></li>
+    {% empty %}
+        <li>No videos here.</li>
+    {% endfor %}
+</ul>
+    <input type="submit" value="Remove" />
+</form>

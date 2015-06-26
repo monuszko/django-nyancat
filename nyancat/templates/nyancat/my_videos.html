@@ -10,7 +10,7 @@
 {% endif %}
 
 <ul>
-    {% for video in videos %}
+    {% for video in video_list %}
     <li><a href="{{ video.get_youtube_url }}">Video {{ forloop.counter }}</a></li>
     {% empty %}
         <li>No videos here.</li>
@@ -18,5 +18,6 @@
 </ul>
 
 {% if is_owner %}
-<a href="{% url 'nyancat:addvideo' %}">Add video</a>
+<a href="{% url 'nyancat:add_video' %}">Add video</a>
+<a href="{% url 'nyancat:remove_videos' %}">Remove videos</a>
 {% endif %}

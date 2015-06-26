@@ -23,12 +23,21 @@ def index(request):
 
 
     person = Person.objects.create()
-    response = HttpResponseRedirect(reverse('nyancat:myvideos', kwargs={'person_pk': person.pk}))
+    response = HttpResponseRedirect(reverse('nyancat:my_videos',
+        kwargs={'person_pk': person.pk}))
     response.set_cookie('password', person.password, max_age=ONE_YEAR)
     return response
 
 
-def myvideos(request, person_pk):
+def get_edit_person(request):
+    '''Helper function to reduce boilerplate in edit views'''
+    password = request.COOKIES.get('password', None)
+    if not password:
+        raise HttpResponseForbidden()
+    return Person.objects.get(password=password)
+
+
+def my_videos(request, person_pk):
     person = get_object_or_404(Person, pk=person_pk)
     password = request.COOKIES.get('password', None)
     is_owner = True if password == person.password else False
@@ -36,12 +45,27 @@ def myvideos(request, person_pk):
     context = {
             'person': person,
             'is_owner': is_owner,
-            'videos': person.videos.all(),
+            'video_list': person.videos.all(),
             }
-    return render(request, 'nyancat/myvideos.html', context)
+    return render(request, 'nyancat/my_videos.html', context)
 
 
-def addvideo(request):
+def remove_videos(request):
+    person = get_edit_person(request)
+
+    if request.method=='POST':
+        to_remove = request.POST.getlist('to_remove')
+        qs_to_remove = Video.objects.filter(id__in=to_remove)
+        for vid in qs_to_remove:
+            person.videos.remove(vid)
+        messages.info(request, '%s videos removed.' % len(to_remove))
+        return HttpResponseRedirect(person.get_absolute_url())
+    else:
+        context = {'video_list': person.videos.all()}
+        return render(request, 'nyancat/remove_videos.html', context)
+
+
+def add_video(request):
     if request.method == 'POST':
         form = VideoForm(request.POST)
 
@@ -49,11 +73,7 @@ def addvideo(request):
             video = Video.objects.get_or_create(url=form.cleaned_data['url'])
             video, is_new = video[0], video[1]
 
-            password = request.COOKIES.get('password', None)
-            if not password:
-                raise HttpResponseForbidden()
-
-            person = Person.objects.get(password=password)
+            person = get_edit_person(request)
 
             if is_new:
                 msg = 'Thanks for the new video!'
@@ -77,4 +97,3 @@ class MostPopular(ListView):
     queryset = Video.objects.annotate(
             num_persons=Count('person')).order_by('-num_persons')
     template_name = 'nyancat/most_popular.html'
-

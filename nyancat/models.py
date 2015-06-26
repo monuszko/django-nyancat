@@ -23,7 +23,7 @@ class Person(models.Model):
         super(Person, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('nyancat:myvideos', kwargs={'person_pk': self.pk})
+        return reverse('nyancat:my_videos', kwargs={'person_pk': self.pk})
 
     def __str__(self):
         return str(self.pk)
