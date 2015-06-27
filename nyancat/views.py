@@ -3,6 +3,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import UpdateView
 from django.http import (HttpResponse, 
         HttpResponseRedirect, HttpResponseForbidden) # PEP 0328
+from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.db.models import Count
 from django.contrib import messages
@@ -108,3 +109,42 @@ class MostPopular(ListView):
     queryset = Video.objects.annotate(
             num_persons=Count('person')).order_by('-num_persons')
     template_name = 'nyancat/most_popular.html'
+
+
+def restore_cookie(request, person_url, token):
+    '''Sets the password cookie, equivalent to "lost password" links'''
+    #TODO: insecure ?
+    person = get_object_or_404(Person, url=person_url)
+    response = HttpResponseRedirect(reverse('nyancat:my_videos',
+        kwargs={'person_url': person.url}))
+    if person.check_token(token):
+        response.set_cookie('password', person.password, max_age=ONE_YEAR)
+        messages.info(request, 'Cookie set.')
+    else:
+        messages.info(request, 'Bad/expired link.')
+    return response
+
+
+def send_password(request, person_url):
+    from django.conf import settings
+    person = get_object_or_404(Person, url=person_url)
+    if not person.email:
+        return
+    subject = 'Nyancat password recovery'
+    body = """
+            Someone requested a password reminder for your nyancat page.
+            You can use the link below to set the password cookie for
+            your page, for example in another browser, on another
+            device: \n
+            {}\n
+            If you don't know what this is about, ignore this message.
+            """.format(request.build_absolute_uri(person.restore_cookie_url()))
+    from_email = 'from@example.com'
+    if hasattr(settings, 'NYANCAT_EMAIL'):
+        from_email = settings.NYANCAT_EMAIL
+    to = person.email
+    send_mail(subject, body, from_email, [to], fail_silently=False)
+    response = HttpResponseRedirect(reverse('nyancat:my_videos',
+            kwargs={'person_url': person_url}))
+    messages.info(request, 'Message sent. Check your mail.')
+    return response

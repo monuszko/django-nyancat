@@ -15,4 +15,8 @@ urlpatterns = (
             views.remove_videos, name='remove_videos'),
         url(r'^most_popular/$',
             views.MostPopular.as_view(), name='most_popular'),
+        url(r'^restore_cookie/(?P<person_url>[\w.@+-]+)/(?P<token>[\w.:_=-]+)$',
+            views.restore_cookie, name='restore_cookie'),
+        url(r'^send_password/(?P<person_url>[a-zA-Z0-9]+)/$',
+            views.send_password, name='send_password'),
         )
