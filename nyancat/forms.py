@@ -15,7 +15,7 @@ class VideoForm(forms.Form):
         if not data.startswith('https://www.youtube.com/'):
             raise ValidationError(_('Invalid value'), code='notyoutube')
 
-        data = re.search('[?&]v=([a-zA-Z0-9-]+)', data)
+        data = re.search('[?&]v=([_a-zA-Z0-9-]+)', data)
         if not data:
             raise ValidationError(_('Invalid value'), code='novideo')
 

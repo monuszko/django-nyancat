@@ -19,18 +19,12 @@ ONE_YEAR = ONE_DAY * 365
 
 def index(request):
     #TODO: make this more secure
+    person = None
     password = request.COOKIES.get('password', None)
     if password:
-        person_url = Person.objects.get(password=password).url
-        response = HttpResponseRedirect(reverse('nyancat:my_videos',
-            kwargs={'person_url': person_url}))
-        return response
+        person = Person.objects.get(password=password)
 
-
-    person = Person.objects.create()
-    response = HttpResponseRedirect(reverse('nyancat:my_videos',
-        kwargs={'person_url': person.url}))
-    response.set_cookie('password', person.password, max_age=ONE_YEAR)
+    response = render(request, 'nyancat/index.html', {'person': person})
     return response
 
 
@@ -83,11 +77,19 @@ def add_video(request):
 
         if form.is_valid():
             video = Video.objects.get_or_create(url=form.cleaned_data['url'])
-            video, is_new = video[0], video[1]
+            video, video_is_new = video[0], video[1]
 
-            person = get_edit_person(request)
+            # Person is created on first video upload. This serves as a
+            # rudimentary rudimentary protection from crawler bots generating
+            # billions of table rows.
+            password = request.COOKIES.get('password', None)
+            if password:
+                person = Person.objects.get(password=password)
+            else: 
+                person = Person.objects.create()
+                messages.info(request, 'Created a new person.')
 
-            if is_new:
+            if video_is_new:
                 msg = 'Thanks for the new video!'
             elif video not in person.videos.all():
                 msg = '{} users already knew this video!'.format(
@@ -97,7 +99,9 @@ def add_video(request):
             messages.info(request, msg)
 
             person.videos.add(video)
-            return HttpResponseRedirect(person.get_absolute_url())
+            response = HttpResponseRedirect(person.get_absolute_url())
+            response.set_cookie('password', person.password, max_age=ONE_YEAR)
+            return response
     else:
         form = VideoForm()
 

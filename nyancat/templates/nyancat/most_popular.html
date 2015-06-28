@@ -1,3 +1,5 @@
+<h2>Most popular videos</h2>
+
 <ul>
 {% for video in video_list %}
 <li><a href="{{ video.get_youtube_url }}">Video {{ forloop.counter }}</a> ({{ video.num_persons }})</li>
