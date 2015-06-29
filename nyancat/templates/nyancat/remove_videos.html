@@ -1,6 +1,10 @@
 {% extends 'nyancat/base.html' %}
+{% load i18n %}
 
 {% block content %}
+<h2>{% trans 'Remove videos' %}</h2>
+<p>{% trans 'Select videos to remove.' %}</p>
+
 <form action="" method="POST">{% csrf_token %}
 <ul>
     {% for video in video_list %}
@@ -10,9 +14,9 @@
     </div>
     <input type="checkbox" name="to_remove" value="{{ video.id }}"/></li>
     {% empty %}
-    <p>No videos here.</p>
+    <p>{% trans 'No videos here' %}.</p>
     {% endfor %}
 </ul>
-    <input type="submit" value="Remove" />
+<input type="submit" value="{% trans 'Remove' %}" />
 </form>
 {% endblock content %}

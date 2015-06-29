@@ -28,7 +28,7 @@ class Person(models.Model):
         return reverse('nyancat:my_videos', kwargs={'person_url': self.url})
 
     def __str__(self):
-        return str(self.pk)
+        return str(self.url)
 
     def make_token(self):
         return TimestampSigner().sign(self.url)

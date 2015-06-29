@@ -1,24 +1,22 @@
 {% extends 'nyancat/base.html' %}
+{% load i18n %}
 
 {% block content %}
-<h2>Welcome to nyancat app!</h2>
+<h2>{% trans 'Welcome to nyancat app!' %}</h2>
 
-<p>It allows you to collect youtube videos, make lists of them and share them.</p>
+<p>{% trans 'It allows you to collect youtube videos, make lists of them and share them.' %}</p>
 
-<p>The app is designed to be as inobtrusive as possible while maitaining
-reasonable security. It's currently based 100% on cookies, with no User model
-behind the scenes. User doesn't have to input anything, although at least an
-email is recommended because it allows to recover password.<p>
+<p>{% trans "The app is designed to be as inobtrusive as possible while maitaining reasonable security. It's currently based 100% on cookies, with no User model behind the scenes. User doesn't have to input anything, although at least an email is recommended because it allows to recover password." %}<p>
 
 <ul>
 {% if person %}
-    <h3>Welcome back, {{ person.url }} !</h3>
-    <li><a href="{% url 'nyancat:my_videos' person.url %}">Visit your page</a></li>
+<h3>{% trans 'Welcome back,' %} {{ person.url }} !</h3>
+<li><a href="{% url 'nyancat:my_videos' person.url %}">{% trans 'Visit your page' %}</a></li>
 {% else %}
-    <h3>Welcome, new user !</h3>
-    <li><a href="{% url 'nyancat:add_video' %}">Upload a video to get started</a></li>
+<h3>{% trans 'Welcome, new user !' %}</h3>
+<li><a href="{% url 'nyancat:add_video' %}">{% trans 'Upload a video to get started' %}</a></li>
 {% endif %}
 
-<li><a href="{% url 'nyancat:most_popular' %}">Most popular videos</a></li>
+<li><a href="{% url 'nyancat:most_popular' %}">{% trans 'Most popular videos' %}</a></li>
 </ul>
 {% endblock content %}

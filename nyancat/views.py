@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.db.models import Count
 from django.contrib import messages
+from django.utils.translation import ugettext as _
 
 from .models import Person, Video
 from .forms import VideoForm
@@ -64,7 +65,7 @@ def remove_videos(request):
         qs_to_remove = Video.objects.filter(id__in=to_remove)
         for vid in qs_to_remove:
             person.videos.remove(vid)
-        messages.info(request, '%s videos removed.' % len(to_remove))
+        messages.info(request, _('%s videos removed.') % len(to_remove))
         return HttpResponseRedirect(person.get_absolute_url())
     else:
         context = {'video_list': person.videos.all()}
@@ -87,15 +88,15 @@ def add_video(request):
                 person = Person.objects.get(password=password)
             else: 
                 person = Person.objects.create()
-                messages.info(request, 'Created a new person.')
+                messages.info(request, _('Created a new person.'))
 
             if video_is_new:
-                msg = 'Thanks for the new video!'
+                msg = _('Thanks for the new video!')
             elif video not in person.videos.all():
-                msg = '{} users already knew this video!'.format(
-                        video.person_set.count())
+                msg = _('{} users already knew this video!'.format(
+                        video.person_set.count()))
             else:
-                msg = 'You already had this video.'
+                msg = _('You already had this video.')
             messages.info(request, msg)
 
             person.videos.add(video)
@@ -123,9 +124,9 @@ def restore_cookie(request, person_url, token):
         kwargs={'person_url': person.url}))
     if person.check_token(token):
         response.set_cookie('password', person.password, max_age=ONE_YEAR)
-        messages.info(request, 'Cookie set.')
+        messages.info(request, _('Cookie set.'))
     else:
-        messages.info(request, 'Bad/expired link.')
+        messages.info(request, _('Bad/expired link.'))
     return response
 
 
@@ -134,15 +135,15 @@ def send_password(request, person_url):
     person = get_object_or_404(Person, url=person_url)
     if not person.email:
         return
-    subject = 'Nyancat password recovery'
-    body = """
+    subject = _('Nyancat password recovery')
+    body = _("""
             Someone requested a password reminder for your nyancat page.
             You can use the link below to set the password cookie for
             your page, for example in another browser, on another
             device: \n
             {}\n
             If you don't know what this is about, ignore this message.
-            """.format(request.build_absolute_uri(person.restore_cookie_url()))
+            """.format(request.build_absolute_uri(person.restore_cookie_url())))
     from_email = 'from@example.com'
     if hasattr(settings, 'NYANCAT_EMAIL'):
         from_email = settings.NYANCAT_EMAIL
@@ -150,5 +151,5 @@ def send_password(request, person_url):
     send_mail(subject, body, from_email, [to], fail_silently=False)
     response = HttpResponseRedirect(reverse('nyancat:my_videos',
             kwargs={'person_url': person_url}))
-    messages.info(request, 'Message sent. Check your mail.')
+    messages.info(request, _('Message sent. Check your mail.'))
     return response

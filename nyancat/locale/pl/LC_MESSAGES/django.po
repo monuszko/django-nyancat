@@ -1,0 +1,189 @@
+# -*- coding: utf-8 -*-
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-06-29 12:05+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#: forms.py:16 forms.py:20
+msgid "Invalid value"
+msgstr "Zła wartość"
+
+#: templates/nyancat/index.html:5
+msgid "Welcome to nyancat app!"
+msgstr "Witaj w aplikacji nyancat!"
+
+#: templates/nyancat/index.html:7
+msgid ""
+"It allows you to collect youtube videos, make lists of them and share them."
+msgstr ""
+"Pozwala ona gromadzić filmiki z youtube, robić z nich listy i "
+"dzielić się nimi."
+
+#: templates/nyancat/index.html:9
+#, python-format
+msgid ""
+"The app is designed to be as inobtrusive as possible while maitaining "
+"reasonable security. It's currently based 100 on cookies, with no User "
+"model behind the scenes. User doesn't have to input anything, although at "
+"least an email is recommended because it allows to recover password."
+msgstr ""
+"Aplikacja jest zaprojektowana by nie wchodzić w drogę użytkownikowi a jednocześnie być możliwie "
+"bezpieczną. Obecnie jest w 100 oparta na ciasteczkach, bez modelu User i tego "
+"typu autoryzacji w tle. Użytkownik nie musi podawać żadnych informacji, mimo "
+"to zalecane jest podanie przynajmniej e-maila do późniejszego odzyskania hasła. "
+
+#: templates/nyancat/index.html:13
+msgid "Welcome back,"
+msgstr "Witaj ponownie,"
+
+#: templates/nyancat/index.html:14
+msgid "Visit your page"
+msgstr "Odwiedź swoją stronę"
+
+#: templates/nyancat/index.html:16
+msgid "Welcome, new user !"
+msgstr "Witaj, nowy użytkowniku !"
+
+#: templates/nyancat/index.html:17
+msgid "Upload a video to get started"
+msgstr "Wyślij filmik aby zacząć"
+
+#: templates/nyancat/index.html:20 templates/nyancat/most_popular.html:5
+msgid "Most popular videos"
+msgstr "Najpopularniejsze filmiki"
+
+#: templates/nyancat/my_videos.html:5
+msgid "Your "
+msgstr "Twoje "
+
+#: templates/nyancat/my_videos.html:5
+msgid "Videos"
+msgstr "Filmiki"
+
+#: templates/nyancat/my_videos.html:19 templates/nyancat/video_form.html:5
+msgid "Add video"
+msgstr "Dodanie filmiku"
+
+#: templates/nyancat/my_videos.html:20 templates/nyancat/remove_videos.html:5
+msgid "Remove videos"
+msgstr "Usunięcie filmików"
+
+#: templates/nyancat/my_videos.html:21
+msgid "Update profile"
+msgstr "Uaktualnienie profilu"
+
+#: templates/nyancat/my_videos.html:23
+msgid "Restore password"
+msgstr "Odzyskanie hasła"
+
+#: templates/nyancat/person_form.html:5
+msgid ""
+"This website uses cookies for authentication. One day you may want to use "
+"another browser, access the page on a different device, forget your url or "
+"or reinstall your system. Providing an email NOW will let you restore your "
+"cookie."
+msgstr ""
+"Ta strona używa ciasteczek do autoryzacji. Pewnego dnia możesz chcieć użyć "
+"innej przeglądarki, dostać się do strony z innego urządzenia, zapomnieć url "
+"czy przeinstalować system. Podanie e-maila TERAZ pozwoli odzyskać ciasteczko "
+
+#: templates/nyancat/person_form.html:7
+msgid "Update"
+msgstr "Uaktualnij"
+
+#: templates/nyancat/remove_videos.html:6
+msgid "Select videos to remove."
+msgstr "Wybierz filmiki do usunięcia"
+
+#: templates/nyancat/remove_videos.html:17
+msgid "No videos here"
+msgstr "Brak filmików"
+
+#: templates/nyancat/remove_videos.html:20
+msgid "Remove"
+msgstr "Usuń"
+
+#: templates/nyancat/video_form.html:6
+msgid "Please paste a youtube link."
+msgstr "Proszę wkleić odnośnik z youtube."
+
+#: templates/nyancat/video_form.html:10
+msgid "Submit"
+msgstr "Wyślij"
+
+#: views.py:68
+#, python-format
+msgid "%s videos removed."
+msgstr "Usunięto %s filmików."
+
+#: views.py:91
+msgid "Created a new person."
+msgstr "Stworzono nowego użytkownika."
+
+#: views.py:94
+msgid "Thanks for the new video!"
+msgstr "Dzięki za nowy filmik!"
+
+#: views.py:96
+msgid "{} users already knew this video!"
+msgstr "{} ludzi już znało ten filmik!"
+
+#: views.py:99
+msgid "You already had this video."
+msgstr "Już miałeś ten filmik."
+
+#: views.py:127
+msgid "Cookie set."
+msgstr "Ciasteczko ustawione."
+
+#: views.py:129
+msgid "Bad/expired link."
+msgstr "Niepoprawny/nieaktualny odnośnik."
+
+#: views.py:138
+msgid "Nyancat password recovery"
+msgstr "Odzyskanie hasła nyancat"
+
+#: views.py:139
+msgid ""
+"\n"
+"            Someone requested a password reminder for your nyancat page.\n"
+"            You can use the link below to set the password cookie for\n"
+"            your page, for example in another browser, on another\n"
+"            device: \n"
+"\n"
+"            {}\n"
+"\n"
+"            If you don't know what this is about, ignore this message.\n"
+"            "
+msgstr ""
+"\n"
+"            Ktoś zażądał przypomnienia hasła dla twojej strony nyancat.\n"
+"            Możesz użyć poniższego odnośnika do ustawienia ciasteczka\n"
+"            z hasłem twojej strony, np w innej przeglądarce lub \n"
+"            na innym urządzeniu: \n"
+"\n"
+"            {}\n"
+"\n"
+"            Jeżeli nie wiesz, o co tu chodzi, zignoruj tą wiadomość.\n"
+"            "
+
+#: views.py:154
+msgid "Message sent. Check your mail."
+msgstr "Wiadomość wysłana. Sprawdź swoją pocztę."

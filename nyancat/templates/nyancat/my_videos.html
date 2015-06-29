@@ -1,23 +1,24 @@
 {% extends 'nyancat/base.html' %}
+{% load i18n %}
 
 {% block content %}
-<h1>{% if is_owner %}Your {% endif %}Videos</h1>
+<h1>{% if is_owner %}{% trans 'Your ' %}{% endif %}{% trans 'Videos' %}</h1>
 
 
 {% if messages %}
-<ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-</ul>
+    <ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+    </ul>
 {% endif %}
 
 {% include 'nyancat/incl_video_list.html' %}
 
 {% if is_owner %}
-<a href="{% url 'nyancat:add_video' %}">Add video</a>
-<a href="{% url 'nyancat:remove_videos' %}">Remove videos</a>
-<a href="{% url 'nyancat:update_person' %}">Update profile</a>
+<a href="{% url 'nyancat:add_video' %}">{% trans 'Add video' %}</a>
+<a href="{% url 'nyancat:remove_videos' %}">{% trans 'Remove videos' %}</a>
+<a href="{% url 'nyancat:update_person' %}">{% trans 'Update profile' %}</a>
 {% endif %}
-<a href="{% url 'nyancat:send_password' person.url %}">Restore password</a>
+<a href="{% url 'nyancat:send_password' person.url %}">{% trans 'Restore password' %}</a>
 {% endblock content %}

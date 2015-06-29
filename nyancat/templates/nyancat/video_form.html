@@ -1,11 +1,12 @@
 {% extends 'nyancat/base.html' %}
+{% load i18n %}
 
 {% block content %}
-<h2>Add video</h2>
-<p>Please paste a youtube link.</p>
+<h2>{% trans 'Add video' %}</h2>
+<p>{% trans 'Please paste a youtube link.' %}</p>
 
 <form action="" method="POST">{% csrf_token %}
     {{ form.as_p }}
-        <input type="submit" value="Create" />
+    <input type="submit" value="{% trans 'Submit' %}" />
 </form>
 {% endblock content %}
