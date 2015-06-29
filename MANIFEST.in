@@ -1,0 +1,6 @@
+include LICENSE
+include README.rst
+include requirements.txt
+recursive-include nyancat/static *
+recursive-include nyancat/templates *
+recursive-include nyancat/locale *

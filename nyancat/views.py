@@ -81,7 +81,7 @@ def add_video(request):
             video, video_is_new = video[0], video[1]
 
             # Person is created on first video upload. This serves as a
-            # rudimentary rudimentary protection from crawler bots generating
+            # rudimentary protection from crawler bots generating
             # billions of table rows.
             password = request.COOKIES.get('password', None)
             if password:
