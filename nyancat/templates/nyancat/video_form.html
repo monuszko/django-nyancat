@@ -1,3 +1,6 @@
+{% extends 'nyancat/base.html' %}
+
+{% block content %}
 <h2>Add video</h2>
 <p>Please paste a youtube link.</p>
 
@@ -5,3 +8,4 @@
     {{ form.as_p }}
         <input type="submit" value="Create" />
 </form>
+{% endblock content %}

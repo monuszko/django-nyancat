@@ -1,0 +1,7 @@
+{% for video in video_list %}
+    <div class="youtube-container">
+    <div class="youtube-player" data-id="{{ video.url }}"></div>
+    </div>
+{% empty %}
+    <p>No videos here.</p>
+{% endfor %}

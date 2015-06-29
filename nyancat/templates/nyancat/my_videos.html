@@ -1,3 +1,6 @@
+{% extends 'nyancat/base.html' %}
+
+{% block content %}
 <h1>{% if is_owner %}Your {% endif %}Videos</h1>
 
 
@@ -9,13 +12,7 @@
 </ul>
 {% endif %}
 
-<ul>
-    {% for video in video_list %}
-    <li><a href="{{ video.get_youtube_url }}">Video {{ forloop.counter }}</a></li>
-    {% empty %}
-        <li>No videos here.</li>
-    {% endfor %}
-</ul>
+{% include 'nyancat/incl_video_list.html' %}
 
 {% if is_owner %}
 <a href="{% url 'nyancat:add_video' %}">Add video</a>
@@ -23,3 +20,4 @@
 <a href="{% url 'nyancat:update_person' %}">Update profile</a>
 {% endif %}
 <a href="{% url 'nyancat:send_password' person.url %}">Restore password</a>
+{% endblock content %}

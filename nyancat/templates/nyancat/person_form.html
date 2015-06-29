@@ -1,6 +1,10 @@
+{% extends 'nyancat/base.html' %}
+
+{% block content %}
 <p>This website uses cookies for authentication. One day you may want to use
 another browser, access the page on a different device, forget your url or or
 reinstall your system. Providing an email NOW will let you restore your
 cookie.</p>
 <form action="" method="POST">{% csrf_token %} {{ form.as_p }}
     <input type="submit" value="Update" /> </form>
+{% endblock content %}

@@ -1,10 +1,18 @@
+{% extends 'nyancat/base.html' %}
+
+{% block content %}
 <form action="" method="POST">{% csrf_token %}
 <ul>
     {% for video in video_list %}
-    <li><a href="{{ video.get_youtube_url }}">Video {{ forloop.counter }}</a> <input type="checkbox" name="to_remove" value="{{ video.id }}"/></li>
+
+    <div class="youtube-container">
+    <div class="youtube-player" data-id="{{ video.url }}"></div>
+    </div>
+    <input type="checkbox" name="to_remove" value="{{ video.id }}"/></li>
     {% empty %}
-        <li>No videos here.</li>
+    <p>No videos here.</p>
     {% endfor %}
 </ul>
     <input type="submit" value="Remove" />
 </form>
+{% endblock content %}
